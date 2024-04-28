@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tpassin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/04/28 21:17:50 by tpassin          ###   ########.fr       */
+/*   Created: 2023/11/22 16:42:53 by tpassin           #+#    #+#             */
+/*   Updated: 2023/11/22 16:48:48 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **envp)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-    
+	new->next = *lst;
+	*lst = new;
 }

@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 00:35:33 by tpassin           #+#    #+#             */
-/*   Updated: 2024/04/28 21:28:11 by tpassin          ###   ########.fr       */
+/*   Created: 2023/11/16 00:20:55 by tpassin           #+#    #+#             */
+/*   Updated: 2024/03/14 01:04:00 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <fcntl.h>
-
-typedef struct s_pipex
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-    int     fd[2];
-    int     pid;
-    int     nb_cmd;
-    int     fd_in;
-    int     fd_out;
-    int     prev_fd;
-    char    *infile;
-    char    *outfile;
-    char    **cmd;
-    char    **env_path;
-}               t_pipex;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-# endif
+	i = -1;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * ((ft_strlen(s1) + 1)
+				+ ft_strlen(s2) + 1));
+	if (!str)
+		return (NULL);
+	while (s1[++i])
+		str[i] = s1[i];
+	str[i] = ' ';
+	i++;
+	while (s2[j])
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
+}

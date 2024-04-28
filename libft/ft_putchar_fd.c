@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/04/28 21:17:50 by tpassin          ###   ########.fr       */
+/*   Created: 2023/11/14 12:43:20 by tpassin           #+#    #+#             */
+/*   Updated: 2023/11/15 23:43:27 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **envp)
+void	ft_putchar_fd(char c, int fd)
 {
-    
+	write(fd, &c, 1);
 }

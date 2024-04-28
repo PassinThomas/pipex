@@ -3,12 +3,12 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <string.h> 
 
 int main(int argc, char **argv, char **envp) {
 	//infile cmd1 cmd2 outfile
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	int pid1;
 	int pid2;
 	int pipe_fd[2];
@@ -48,8 +48,8 @@ int main(int argc, char **argv, char **envp) {
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-	waitpid(pid1, 0, 0);
-	waitpid(pid2, 0, 0);
+	while (wait(NULL) > 0)
+		;
 	printf("au revoir parent\n");
 	return (0);
 }
@@ -72,16 +72,3 @@ int main(int argc, char **argv, char **envp) {
 // 	lire fichier
 // if i == dernier
 // 	ecrire fichier
-
-// while (i < nbcmd)
-// {
-
-
-// 	if i != 0
-// 		dup2(prev, 0)
-// 	if i != dernier
-// 		dup()
-// 		ecrit devant
-
-// 	prev = la ou le boug a ecrit
-// }

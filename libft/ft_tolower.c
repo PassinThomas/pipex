@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tpassin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/04/28 21:17:50 by tpassin          ###   ########.fr       */
+/*   Created: 2023/11/08 15:08:07 by tpassin           #+#    #+#             */
+/*   Updated: 2023/11/08 15:10:43 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "libft.h"
 
-int main(int ac, char **av, char **envp)
+int	ft_tolower(int c)
 {
-    
+	if (c >= 'A' && c <= 'Z')
+		return (c += 32);
+	return (c);
 }
