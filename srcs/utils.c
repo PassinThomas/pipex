@@ -6,13 +6,13 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/02 18:54:45 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/03 19:06:43 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	init_data(int ac, char **av, char **envp, t_pipex *data)
+void	init_data(t_pipex *data, int ac, char **av, char **envp)
 {
 	data->prev_fd = -1;
 	data->infile = av[1];
@@ -68,7 +68,6 @@ char	*cmd(t_pipex *data, char *command)
 		str = ft_strjoin(split[i], command);
 		if (access(str, F_OK) == 0)
 		{
-			return (str)
 		}
 		free(str);
 		i++;
@@ -79,10 +78,10 @@ char	*cmd(t_pipex *data, char *command)
 int	ft_pipex(t_pipex *pipex, int i, char *argv, char **envp)
 {
 	if (pipe(pipex->fd) == -1)
-		return (perror("pipe\n"), 1);
+		return (perror("pipe"), 1);
 	pipex->pid = fork();
     if (pid == -1)
-        return (perror("fork\n"), 1);
+        return (perror("fork"), 1);
 	if (pid == 0)
 	{
 		// redirection pipe
@@ -95,17 +94,19 @@ int	ft_pipex(t_pipex *pipex, int i, char *argv, char **envp)
 		// redirection fichiers
 		if (i == 0)
 		{
+			pipex->fd_in = open(pipex->infile, O_RDONLY);
 			if (pipex->fd_in < 0)
-				return ("error", 1);
+				return (perror("open"), 1);
 			dup2(pipex->fd_in, STDIN_FILENO);
-			close()
+			close(pipex->fd_in)
 		}
 		if (i == pipex->nb_cmd - 1)
 		{
+			pipex->fd_out = open(pipex->outfile, O_WRONLY| O_CREAT | O_TRUNC, 0644);
 			if (pipex->fd_out < 0)
-				return ("error");
+				return ("open");
 			dup2(pipex->fd_out, STDOUT_FILENO);
-			close();
+			close(pipex->fd_out);
 		}
 		ft_execve(pipex, argv, envp);
 	}
@@ -125,24 +126,22 @@ void	ft_execve(t_pipex *pipex, char *argv, char **envp)
 {
 	char	**tmp;
 
-	tmp = split(argv, ' ');
+	tmp = ft_split(argv, ' ');
 	if (!tmp)
 		return("error");
 	path = cmd(pipex, tmp[0]);
 	if (!path)
-		"error";
+		return(printf("error"), 1);
 	execve(path, tmp, envp);
 }
 
 int	main(int argc, char const *argv[], char **envp)
 {
-		t_pipex pipex;
+	t_pipex pipex;
 
-	argv = "ls -la" path = "/bin/ls"
-		// execve veut path, [ls][la]
+	int (i) = 1;
 	pipex = NULL;
 	pipex.env_path = find_path(envp);
-	int = 1;
 	while (i < pipex.nb_cmd)
 	{
 		ft_pipex(&pipex, i, argv[i], envp);

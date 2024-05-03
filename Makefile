@@ -6,7 +6,7 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 17:12:27 by tpassin           #+#    #+#              #
-#    Updated: 2024/04/28 17:27:32 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/03 19:03:43 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ NAME = pipex
 
 LIBFT = libft.a
 
-SRCS = srcs/main.c \
-	   srcs/utils.c \
+SRCS = srcs/utils.c \
 
 OBJS = ${SRCS:.c=.o}
 
