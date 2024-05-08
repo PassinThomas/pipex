@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **envp) {
 	close(pipe_fd[1]);
 	while (wait(NULL) > 0)
 		;
-	printf("au revoir parent\n");
+	printf("au revoir parent\n");                                                                                                                                                       
 	return (0);
 }
 
