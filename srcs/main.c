@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/08 18:48:15 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/11 18:52:08 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ int	main(int argc, char *argv[], char **envp)
 {
 	t_pipex	pipex;
 
-	int(i) = 1;
+	int(i) = 0;
 	if (argc < 5 || !*envp)
 		return (1);
 	init_data(&pipex, argc, argv);
 	pipex.env = find_path(envp);
 	while (i < pipex.nb_cmd)
 	{
-		ft_pipex(&pipex, i, argv[i], pipex.env);
+		ft_pipex(&pipex, i, argv[i + 2], pipex.env);
 		i++;
 	}
 	while (wait(NULL) > 0)
 		;
+	ft_free(pipex.env);
+	close(pipex.fd[0]);
 	return (0);
 }

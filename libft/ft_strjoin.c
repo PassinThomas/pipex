@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 00:20:55 by tpassin           #+#    #+#             */
-/*   Updated: 2024/03/14 01:04:00 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/11 16:35:45 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while (s1[++i])
 		str[i] = s1[i];
-	str[i] = ' ';
-	i++;
 	while (s2[j])
 	{
 		str[i + j] = s2[j];
