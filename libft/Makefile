@@ -6,7 +6,7 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 07:12:52 by tpassin           #+#    #+#              #
-#    Updated: 2024/03/23 08:15:47 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/15 15:24:17 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,13 @@ ft_free \
 ft_strcmp \
 get_next_line \
 ft_strjoin_bonus \
+ft_printf \
+ft_print_hex \
+ft_putchar \
+ft_putnbr \
+ft_putstr \
+ft_unsigned_nb \
+ft_put_p \
 
 SRCS 	= $(addsuffix .c, ${SRC})
 

@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/21 17:12:27 by tpassin           #+#    #+#              #
-#    Updated: 2024/05/08 19:11:03 by tpassin          ###   ########.fr        #
+#    Created: 2024/05/15 15:13:47 by tpassin           #+#    #+#              #
+#    Updated: 2024/05/15 15:14:03 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,4 +46,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:  all clean fclean re
+.PHONY:  all clean fclean re%  

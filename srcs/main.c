@@ -6,52 +6,72 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/11 18:52:08 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/16 21:32:33 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	file_redir(int i, t_pipex *pipex)
+void	init_data(t_pipex *data, int ac, char **av)
 {
-	// redirection fichiers
-	if (i == 0)
+	data->prev_fd = -1;
+	data->infile = av[1];
+	data->outfile = av[ac - 1];
+	data->nb_cmd = ac - 3;
+}
+
+char	**find_path(char **envp)
+{
+	char	*str;
+	char	**tab;
+
+	int(i) = 0;
+	int(j) = -1;
+	while (envp && envp[i])
 	{
-		pipex->fd_in = open(pipex->infile, O_RDONLY);
-		if (pipex->fd_in < 0)
-			return (perror("open"), 1);
-		dup2(pipex->fd_in, STDIN_FILENO);
-		close(pipex->fd_in);
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			tab = ft_split(envp[i] + 5, ':');
+			while (tab[++j])
+			{
+				str = ft_strdup(tab[j]);
+				free(tab[j]);
+				tab[j] = ft_strjoin(str, "/");
+				free(str);
+			}
+			return (tab);
+		}
+		i++;
 	}
-	if (i == pipex->nb_cmd - 1)
+	return (NULL);
+}
+
+void	ft_waitpid(t_pipex pipex, int i, int status)
+{
+	i = -1;
+	while (++i < pipex.nb_cmd)
 	{
-		pipex->fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
-		if (pipex->fd_out < 0)
-			return (perror("open"), 1);
-		dup2(pipex->fd_out, STDOUT_FILENO);
-		close(pipex->fd_out);
+		waitpid(pipex.pid[i], &status, 0);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
 	}
-	return (0);
 }
 
 int	main(int argc, char *argv[], char **envp)
 {
-	t_pipex	pipex;
+	t_pipex	(pipex) = {0};
 
-	int(i) = 0;
+	int(i) = -1;
 	if (argc < 5 || !*envp)
 		return (1);
 	init_data(&pipex, argc, argv);
 	pipex.env = find_path(envp);
-	while (i < pipex.nb_cmd)
-	{
+	pipex.pid = malloc(pipex.nb_cmd * sizeof(int));
+	if (!pipex.pid)
+		return (perror("malloc pid"), ft_free(pipex.env), 1);
+	while (++i < pipex.nb_cmd)
 		ft_pipex(&pipex, i, argv[i + 2], pipex.env);
-		i++;
-	}
-	while (wait(NULL) > 0)
-		;
-	ft_free(pipex.env);
+	ft_waitpid(pipex, i, pipex.status);
 	close(pipex.fd[0]);
-	return (0);
+	return (free(pipex.pid), ft_free(pipex.env), pipex.status);
 }
