@@ -6,37 +6,36 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/16 21:36:56 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/17 18:42:12 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_exit(t_pipex *pipex, int code, char **envp, char **tmp)
+void	ft_exit(int code, char **envp, char **tmp)
 {
 	ft_free(envp);
-	ft_free(tmp);
 	if (code == 1)
-		return (ft_printf(2, "error split\n"), exit(1));
+		return (ft_printf(2, "error split\n"), ft_free(tmp), exit(1));
 	else if (code == 2)
 	{
 		ft_printf(2, "permission denied: %s\n", tmp[0]);
-		return (exit(126));
+		return (ft_free(tmp), exit(126));
 	}
 	else if (code == 3)
 	{
 		ft_printf(2, "no such file or directory: %s\n", tmp[0]);
-		return (exit(127));
+		return (ft_free(tmp), exit(127));
 	}
 	else if (code == 4)
 	{
 		ft_printf(2, "command %s not found\n", tmp[0]);
-		return (exit(127));
+		return (ft_free(tmp), exit(127));
 	}
 	else if (code == 5)
 	{
 		perror("pipex");
-		return (exit(126));
+		return (ft_free(tmp), exit(126));
 	}
 }
 
@@ -64,23 +63,21 @@ void	ft_execve(t_pipex *pipex, char *argv, char **envp)
 
 	tmp = ft_split(argv, ' ');
 	if (!tmp || !*tmp)
-	{
-		ft_exit(pipex, 1, envp, tmp);
-	}
+		ft_exit(1, envp, tmp);
 	if (ft_strchr(tmp[0], '/'))
 	{
 		if (access(tmp[0], F_OK | X_OK | R_OK) == 0)
 			execve(tmp[0], tmp, envp);
 		else if (access(tmp[0], F_OK) == 0 && (access(tmp[0], X_OK | R_OK)))
-			ft_exit(pipex, 2, envp, tmp);
+			ft_exit(2, envp, tmp);
 		else
-			ft_exit(pipex, 3, envp, tmp);
+			ft_exit(3, envp, tmp);
 	}
 	path = cmd(pipex, tmp[0]);
 	if (!path)
-		ft_exit(pipex, 4, envp, tmp);
+		ft_exit(4, envp, tmp);
 	execve(path, tmp, envp);
-	ft_exit(pipex, 5, envp, tmp);
+	ft_exit(5, envp, tmp);
 }
 
 int	file_redir(int i, t_pipex *pipex)

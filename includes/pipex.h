@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 00:35:33 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/16 21:30:38 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/17 16:37:25 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define PIPEX_H
 
 # include "../libft/libft.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -37,7 +39,7 @@ typedef struct s_pipex
 }			t_pipex;
 
 int			file_redir(int i, t_pipex *data);
-void		init_data(t_pipex *data, int ac, char **av);
+void		init_data(t_pipex *data, int ac, char **av, char **envp);
 char		**find_path(char **envp);
 char		*cmd(t_pipex *data, char *command);
 void		ft_execve(t_pipex *pipex, char *argv, char **envp);
