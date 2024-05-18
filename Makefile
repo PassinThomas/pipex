@@ -6,18 +6,24 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/15 15:13:47 by tpassin           #+#    #+#              #
-#    Updated: 2024/05/15 15:14:03 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/18 16:18:06 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
+NAME_BONUS = pipex_bonus
 
 LIBFT = libft.a
 
 SRCS = srcs/utils.c \
 	   srcs/main.c \
 
+BONUS = srcs/bonus/bonus_utils.c \
+	   	srcs/bonus/bonus_main.c \
+
 OBJS = ${SRCS:.c=.o}
+BONUS_OBJS = ${BONUS:.c=.o}
+
 
 CC = cc
 
@@ -37,13 +43,17 @@ $(NAME): ${OBJS}
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean:
-	${RM} ${OBJS}
+	${RM} ${OBJS} ${BONUS_OBJS}
 	$(MAKE) -C ./libft clean
 
 fclean: clean
-	${RM} ${NAME}
+	${RM} ${NAME} ${NAME_BONUS}
 	$(MAKE) -C ./libft fclean
 
 re: fclean all
 
-.PHONY:  all clean fclean re%  
+bonus: ${BONUS_OBJS}
+	$(MAKE) -C ./libft
+	${CC} ${BONUS_OBJS} ${LFLAGS} -o $(NAME_BONUS)
+
+.PHONY:  all clean fclean re bonus  

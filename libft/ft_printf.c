@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 19:57:51 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/17 17:42:42 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/18 15:49:38 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_printf(int fd, const char *str, ...)
 	while (str[++i])
 	{
 		if (str[i] == '%')
-			count += print_conv(str[i + 1], ap, &buff);
+			count += print_conv(str[++i], ap, &buff);
 		else
 			count += ft_putchar(str[i], &buff);
 	}

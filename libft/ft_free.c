@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 07:43:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/03/14 01:01:58 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/18 15:57:36 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ft_free(char **tab)
 	int	i;
 
 	i = 0;
+	if (!tab)
+		return ;
 	while (tab[i])
 		free(tab[i++]);
 	free(tab);
