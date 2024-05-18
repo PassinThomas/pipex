@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/18 18:37:05 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:51:38 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,25 @@ void	ft_here_doc(t_pipex *pipex, char *lim)
 	int		fd;
 	char	*str;
 
+	pipex->here_doc = 1;
 	fd = open("here_doc",  O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return (strerror(errno), exit(1));
-	
-	
+		return (strerror(errno));
+	while (1)
+	{
+		str = get_next_line(0, 0);
+		if (!str)
+			break ;
+		if (strncmp(str, lim, strlen(lim)) == 0 && str[strlen(lim)] == '\n')
+		{
+			free(str);
+			get_next_line(0, 1);
+			break ;
+		}
+		ft_printf(fd, "%s\n", str);
+		free(str);
+	}
+	close(fd);
 }
 
 void	init_data(t_pipex *data, int ac, char **av, char **envp)
