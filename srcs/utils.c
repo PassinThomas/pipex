@@ -6,17 +6,18 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/18 16:05:35 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:03:32 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	ft_exit(int code, char **envp, char **tmp)
+void	ft_exit(int code, t_pipex *pipex, char **tmp)
 {
-	ft_free(envp);
+	if (pipex->path)
+		ft_free(pipex->path);
 	if (code == 1)
-		return (ft_printf(2, "command not found\n"), ft_free(tmp), exit(1));
+		return (ft_printf(2, "command not found\n"), ft_free(tmp), exit(127));
 	else if (code == 2)
 	{
 		ft_printf(2, "permission denied: %s\n", tmp[0]);
@@ -29,7 +30,7 @@ void	ft_exit(int code, char **envp, char **tmp)
 	}
 	else if (code == 4)
 	{
-		ft_printf(2, "command %s not found\n", tmp[0]);
+		ft_printf(2, "%s: command not found\n", tmp[0]);
 		return (ft_free(tmp), exit(127));
 	}
 	else if (code == 5)
@@ -45,9 +46,9 @@ char	*cmd(t_pipex *data, char *command)
 	int		i;
 
 	i = 0;
-	while (data->env[i])
+	while (data->path && data->path[i])
 	{
-		str = ft_strjoin(data->env[i], command);
+		str = ft_strjoin(data->path[i], command);
 		if (access(str, F_OK | X_OK | R_OK) == 0)
 			return (str);
 		free(str);
@@ -63,21 +64,21 @@ void	ft_execve(t_pipex *pipex, char *argv, char **envp)
 
 	tmp = ft_split(argv, ' ');
 	if (!tmp || !*tmp)
-		ft_exit(1, envp, tmp);
+		ft_exit(1, pipex, tmp);
 	if (ft_strchr(tmp[0], '/'))
 	{
 		if (access(tmp[0], F_OK | X_OK | R_OK) == 0)
 			execve(tmp[0], tmp, envp);
 		else if (access(tmp[0], F_OK) == 0 && (access(tmp[0], X_OK | R_OK)))
-			ft_exit(2, envp, tmp);
+			ft_exit(2, pipex, tmp);
 		else
-			ft_exit(3, envp, tmp);
+			ft_exit(3, pipex, tmp);
 	}
 	path = cmd(pipex, tmp[0]);
 	if (!path)
-		ft_exit(4, envp, tmp);
+		ft_exit(4, pipex, tmp);
 	execve(path, tmp, envp);
-	ft_exit(5, envp, tmp);
+	ft_exit(5, pipex, tmp);
 }
 
 int	file_redir(int i, t_pipex *pipex)
@@ -121,7 +122,7 @@ void	ft_pipex(t_pipex *pipex, int i, char *argv, char **envp)
 		if (pipex->prev_fd > 2)
 			close(pipex->prev_fd);
 		if (file_redir(i, pipex))
-			return (ft_free(envp), exit(1));
+			return (ft_free(pipex->path), exit(1));
 		ft_execve(pipex, argv, envp);
 	}
 	if (pipex->prev_fd != -1)

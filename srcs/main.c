@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/18 16:01:37 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:20:47 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	init_data(t_pipex *data, int ac, char **av, char **envp)
 	data->infile = av[1];
 	data->outfile = av[ac - 1];
 	data->nb_cmd = ac - 3;
-	data->env = find_path(envp);
+	data->path = find_path(envp);
 	data->pid = malloc(data->nb_cmd * sizeof(int));
 	if (!data->pid)
-		return (perror("malloc pid"), ft_free(data->env), exit(1));
+		return (perror("malloc pid"), ft_free(data->path), exit(1));
 }
 
 char	**find_path(char **envp)
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char **envp)
 		return (1);
 	init_data(&pipex, argc, argv, envp);
 	while (++i < pipex.nb_cmd)
-		ft_pipex(&pipex, i, argv[i + 2], pipex.env);
+		ft_pipex(&pipex, i, argv[i + 2], envp);
 	i = -1;
 	while (++i < pipex.nb_cmd)
 	{
@@ -67,5 +67,5 @@ int	main(int argc, char *argv[], char **envp)
 			pipex.status = WEXITSTATUS(pipex.status);
 	}
 	close(pipex.fd[0]);
-	return (free(pipex.pid), ft_free(pipex.env), pipex.status);
+	return (free(pipex.pid), ft_free(pipex.path), pipex.status);
 }
