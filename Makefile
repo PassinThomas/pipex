@@ -6,7 +6,7 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/15 15:13:47 by tpassin           #+#    #+#              #
-#    Updated: 2024/05/23 21:13:57 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/23 21:23:43 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,15 @@ LFLAGS = -L./libft -lft
 RM = rm -f
 
 all: ${NAME}
+bonus: ${NAME_BONUS}
 
 $(NAME): ${OBJS}
 	$(MAKE) -C ./libft
 	${CC} ${OBJS} ${LFLAGS} -o $(NAME)
+
+$(NAME_BONUS): ${BONUS_OBJS}
+	$(MAKE) -C ./libft
+	${CC} ${BONUS_OBJS} ${LFLAGS} -o $(NAME_BONUS)
     
 %.o:%.c
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
@@ -50,10 +55,6 @@ fclean: clean
 	${RM} ${NAME} ${NAME_BONUS}
 	$(MAKE) -C ./libft fclean
 
-re: fclean all
+re: fclean all pipex_bns
 
-bonus: ${BONUS_OBJS}
-	$(MAKE) -C ./libft
-	${CC} ${BONUS_OBJS} ${LFLAGS} -o $(NAME_BONUS)
-
-.PHONY:  all clean fclean re bonus  
+.PHONY:  all pipex_bns clean fclean re bonus  
