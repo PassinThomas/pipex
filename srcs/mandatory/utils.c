@@ -6,11 +6,11 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/22 18:03:32 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:13:24 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/pipex.h"
 
 void	ft_exit(int code, t_pipex *pipex, char **tmp)
 {

@@ -6,11 +6,11 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/22 17:20:47 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/23 21:13:33 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/pipex.h"
 
 void	init_data(t_pipex *data, int ac, char **av, char **envp)
 {

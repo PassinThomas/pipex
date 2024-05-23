@@ -6,7 +6,7 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/15 15:13:47 by tpassin           #+#    #+#              #
-#    Updated: 2024/05/18 16:18:06 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/23 21:13:57 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME_BONUS = pipex_bonus
 
 LIBFT = libft.a
 
-SRCS = srcs/utils.c \
-	   srcs/main.c \
+SRCS = srcs/mandatory/utils.c \
+	   srcs/mandatory/main.c \
 
 BONUS = srcs/bonus/bonus_utils.c \
 	   	srcs/bonus/bonus_main.c \

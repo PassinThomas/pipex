@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/22 19:46:48 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/23 18:41:06 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,12 @@ int	file_redir(int i, t_pipex *pipex)
 	}
 	if (i == pipex->nb_cmd - 1)
 	{
-		pipex->fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
+		if (pipex->here_doc == 1)
+			pipex->fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
+		else
+			pipex->fd_out = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC,
+					0644);
 		if (pipex->fd_out < 0)
 			return (perror("open"), 1);
 		dup2(pipex->fd_out, STDOUT_FILENO);

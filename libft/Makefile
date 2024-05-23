@@ -6,7 +6,7 @@
 #    By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/23 07:12:52 by tpassin           #+#    #+#              #
-#    Updated: 2024/05/15 15:24:17 by tpassin          ###   ########.fr        #
+#    Updated: 2024/05/23 20:18:02 by tpassin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,22 +55,19 @@ ft_putnbr \
 ft_putstr \
 ft_unsigned_nb \
 ft_put_p \
+ft_lstnew \
+ft_lstadd_front \
+ft_lstsize \
+ft_lstlast \
+ft_lstiter \
+ft_lstclear \
+ft_lstmap \
+ft_lstdelone \
+ft_lstadd_back \
 
 SRCS 	= $(addsuffix .c, ${SRC})
 
 OBJS	= ${SRCS:.c=.o}
-
-BONUS	=	ft_lstnew.c \
-ft_lstadd_front.c \
-ft_lstsize.c \
-ft_lstlast.c \
-ft_lstiter.c \
-ft_lstclear.c \
-ft_lstmap.c \
-ft_lstdelone.c \
-ft_lstadd_back.c \
-
-BONUS_OBJS	= ${BONUS:.c=.o}
 
 CC	= cc
 RM	= rm -f
@@ -80,7 +77,7 @@ CFLAGS	= -g3 -g -Wall -Werror -Wextra
 
 NAME = libft.a
 
-all:		${NAME} bonus
+all:		${NAME}
 
 ${NAME}:	${OBJS}
 				${AR} ${NAME} ${OBJS}		
@@ -89,14 +86,11 @@ ${NAME}:	${OBJS}
 		${CC} ${CFLAGS} -c $< -o $@
 
 clean:
-		${RM} ${OBJS} ${BONUS_OBJS}
+		${RM} ${OBJS}
 
 fclean:	clean
-				${RM} ${NAME} ${BONUS_OBJS}
+				${RM} ${NAME}
 
 re :	fclean all
 
-bonus:		$(BONUS_OBJS)
-				${AR} $(NAME) $(BONUS_OBJS)
-
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
