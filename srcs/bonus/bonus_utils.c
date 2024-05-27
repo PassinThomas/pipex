@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/23 18:41:06 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/27 11:19:36 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(int code, t_pipex *pipex, char **tmp)
 	if (pipex->path)
 		ft_free(pipex->path);
 	if (code == 1)
-		return (ft_printf(2, "command not found\n"), ft_free(tmp), exit(1));
+		return (ft_printf(2, "command not found\n"), ft_free(tmp), exit(127));
 	else if (code == 2)
 	{
 		ft_printf(2, "permission denied: %s\n", tmp[0]);
@@ -78,6 +78,7 @@ void	ft_execve(t_pipex *pipex, char *argv, char **envp)
 	if (!path)
 		ft_exit(4, pipex, tmp);
 	execve(path, tmp, envp);
+	free(path);
 	ft_exit(5, pipex, tmp);
 }
 
@@ -124,12 +125,10 @@ void	ft_pipex(t_pipex *pipex, int i, char *argv, char **envp)
 			close(pipex->prev_fd);
 		}
 		if (i != pipex->nb_cmd - 1)
-		{
 			dup2(pipex->fd[1], STDOUT_FILENO);
-			close(pipex->fd[1]);
-		}
+		close(pipex->fd[1]);
 		if (file_redir(i, pipex))
-			return (ft_free(envp), exit(1));
+			return (ft_free(pipex->path), exit(1));
 		ft_execve(pipex, argv, envp);
 	}
 	close(pipex->fd[1]);

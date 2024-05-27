@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 03:59:42 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/23 21:13:33 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/24 20:58:31 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ char	**find_path(char **envp)
 {
 	char	*str;
 	char	**tab;
+	int		i;
+	int		j;
 
-	int (i) = 0;
-	int (j) = -1;
+	i = 0;
+	j = -1;
 	while (envp && envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -52,10 +54,12 @@ char	**find_path(char **envp)
 
 int	main(int argc, char *argv[], char **envp)
 {
+	int	i;
+
 	t_pipex(pipex) = {0};
-	int (i) = -1;
+	i = -1;
 	if (argc < 5)
-		return (1);
+		return (ft_printf(2, "Error minimum 5 arg required"), 1);
 	init_data(&pipex, argc, argv, envp);
 	while (++i < pipex.nb_cmd)
 		ft_pipex(&pipex, i, argv[i + 2], envp);

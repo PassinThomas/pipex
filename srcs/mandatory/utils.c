@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 01:50:14 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/23 21:13:24 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/27 11:19:17 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_execve(t_pipex *pipex, char *argv, char **envp)
 	if (!path)
 		ft_exit(4, pipex, tmp);
 	execve(path, tmp, envp);
+	free(path);
 	ft_exit(5, pipex, tmp);
 }
 
@@ -114,13 +115,14 @@ void	ft_pipex(t_pipex *pipex, int i, char *argv, char **envp)
 	{
 		free(pipex->pid);
 		if (i != 0)
+		{
 			dup2(pipex->prev_fd, STDIN_FILENO);
+			close(pipex->prev_fd);
+		}
 		if (i != pipex->nb_cmd - 1)
 			dup2(pipex->fd[1], STDOUT_FILENO);
 		close(pipex->fd[0]);
 		close(pipex->fd[1]);
-		if (pipex->prev_fd > 2)
-			close(pipex->prev_fd);
 		if (file_redir(i, pipex))
 			return (ft_free(pipex->path), exit(1));
 		ft_execve(pipex, argv, envp);

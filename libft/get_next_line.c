@@ -6,17 +6,17 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 22:20:28 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/23 19:17:27 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/24 19:55:27 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*line_buffer(int fd, char *next_read, char *buf, int *b);
+static char	*line_buffer(int fd, char *next_read, char *buf, int b);
 static char	*set_line(char *line_buffer);
-static char	*extract_line(char *buf, char *t, int *b);
+static char	*extract_line(char *buf, char *t, int b);
 
-char	*get_next_line(int fd, int *b)
+char	*get_next_line(int fd, int b)
 {
 	static char	*next_read = NULL;
 	char		*line;
@@ -45,7 +45,7 @@ char	*get_next_line(int fd, int *b)
 	return (line);
 }
 
-static char	*line_buffer(int fd, char *next_read, char *buf, int *b)
+static char	*line_buffer(int fd, char *next_read, char *buf, int b)
 {
 	ssize_t	b_read;
 	char	*tmp;
@@ -56,7 +56,7 @@ static char	*line_buffer(int fd, char *next_read, char *buf, int *b)
 		b_read = read(fd, buf, BUFFER_SIZE);
 		if (b_read == -1)
 		{
-			*b = 0;
+			b = 0;
 			return (free(next_read), NULL);
 		}
 		if (b_read == 0)
@@ -91,7 +91,7 @@ static char	*set_line(char *line_buffer)
 	return (stash);
 }
 
-static char	*extract_line(char *buf, char *t, int *b)
+static char	*extract_line(char *buf, char *t, int b)
 {
 	ssize_t	i;
 	char	*new_line;
@@ -102,7 +102,7 @@ static char	*extract_line(char *buf, char *t, int *b)
 	new_line = malloc(sizeof(char) * (i + 2));
 	if (new_line == NULL)
 	{
-		*b = 0;
+		b = 0;
 		return (free(buf), free(t), NULL);
 	}
 	i = -1;

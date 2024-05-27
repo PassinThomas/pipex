@@ -6,7 +6,7 @@
 /*   By: tpassin <tpassin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 00:35:33 by tpassin           #+#    #+#             */
-/*   Updated: 2024/05/22 17:20:24 by tpassin          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:01:11 by tpassin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_pipex
 	char	**path;
 	int		status;
 	int		here_doc;
-	
+
 }			t_pipex;
 
 int			file_redir(int i, t_pipex *data);
